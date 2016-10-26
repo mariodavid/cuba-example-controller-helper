@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<screen-config xmlns="http://schemas.haulmont.com/cuba/screens.xsd">
+    <include file="com/company/cech/screens.xml"/>
+    <screen id="cech$ProductCategory.edit"
+            template="com/company/cech/web/productcategory/product-category-edit.xml"/>
+    <screen id="cech$ProductCategory.browse"
+            template="com/company/cech/web/productcategory/product-category-browse.xml"/>
+    <screen id="cech$Product.browse"
+            template="com/company/cech/web/product/product-browse.xml"/>
+    <screen id="cech$Product.edit"
+            template="com/company/cech/web/product/product-edit.xml"/>
+    <screen id="cech$LineItem.edit"
+            template="com/company/cech/web/lineitem/line-item-edit.xml"/>
+    <screen id="cech$Order.browse"
+            template="com/company/cech/web/order/order-browse.xml"/>
+    <screen id="cech$Order.edit"
+            template="com/company/cech/web/order/order-edit.xml"/>
+</screen-config>
