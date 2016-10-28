@@ -19,7 +19,10 @@ public class LineItemEdit extends AbstractEditor<LineItem> {
     @Override
     void init(Map<String, Object> params) {
         super.init(params)
+        createDependentPickerFieldHelper()
+    }
 
+    private createDependentPickerFieldHelper() {
         new DependentPickerFieldHelper(
                 parent: productCategoryPickerField,
                 child: productPickerField,

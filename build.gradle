@@ -26,9 +26,13 @@ def webModule = project(':app-web')
 
 def servletApi = 'org.apache.tomcat:tomcat-servlet-api:8.0.26'
 
-
 apply(plugin: 'idea')
 apply(plugin: 'cuba')
+apply plugin: 'codenarc'
+
+codenarc {
+    configFile = rootProject.file("config/codenarc/rules.groovy")
+}
 
 cuba {
     artifact {
@@ -51,6 +55,11 @@ configure([globalModule, coreModule, guiModule, webModule]) {
     apply(plugin: 'maven')
     apply(plugin: 'idea')
     apply(plugin: 'cuba')
+    apply plugin: 'codenarc'
+
+    codenarc {
+        configFile = rootProject.file("config/codenarc/rules.groovy")
+    }
 
     dependencies {
         testCompile('junit:junit:4.12')
@@ -72,6 +81,16 @@ configure([globalModule, coreModule, guiModule, webModule]) {
 
 configure([globalModule, coreModule, guiModule, webModule]) {
     apply(plugin: 'groovy')
+
+    apply plugin: 'codenarc'
+
+    codenarcMain {
+        configFile = rootProject.file("config/codenarc/rulesMain.groovy")
+    }
+
+    codenarcTest {
+        configFile = rootProject.file("config/codenarc/rulesTest.groovy")
+    }
 
     sourceSets {
         main { groovy { srcDirs = ["src"] } }

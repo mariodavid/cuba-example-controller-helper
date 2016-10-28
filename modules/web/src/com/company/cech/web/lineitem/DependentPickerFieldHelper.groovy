@@ -14,32 +14,45 @@ class DependentPickerFieldHelper implements ControllerHelper {
 
     @Override
     public void init(Map<String, Object> params = [:]) {
-
         child.setEnabled(false)
+        addValueChangeListenerToParent()
+    }
+
+    private addValueChangeListenerToParent() {
+        parent.addValueChangeListener(new ParentValueChangeListener(childAttribute: childAttribute, child: child))
+    }
+}
+
+class ParentValueChangeListener implements Component.ValueChangeListener {
+
+    PickerField child
+    String childAttribute
+
+    @Override
+    void valueChanged(Component.ValueChangeEvent e) {
+        e.value ? valueChangedNewValue(e.value) : valueChangedEmptyNewValue()
+    }
+
+    private void valueChangedEmptyNewValue() {
+        child.value = null
+    }
+
+    private void valueChangedNewValue(newValue) {
+        enableDisableChild(newValue)
+        setChildLookupParams(newValue)
+    }
+
+    private void setChildLookupParams(def value) {
+        LinkedHashMap lookupScreenParams = getLookupScreenParams(value)
         PickerField.LookupAction childLookupAction = child.getAction("lookup")
+        childLookupAction.lookupScreenParams = lookupScreenParams
+    }
 
-        parent.addValueChangeListener(new Component.ValueChangeListener() {
-            @Override
-            void valueChanged(Component.ValueChangeEvent e) {
+    private LinkedHashMap getLookupScreenParams(def value) {
+        value ? ["$childAttribute":value]  : [:]
+    }
 
-                def lookupScreenParams = [:]
-                boolean childEnabled = false
-
-                if (e.value) {
-                    lookupScreenParams."$childAttribute" = e.value
-                    childEnabled = true
-                }
-                else {
-                    child.value = null
-                }
-
-                child.setEnabled(childEnabled)
-                childLookupAction.lookupScreenParams = lookupScreenParams
-
-            }
-        })
-
-
-
+    private void enableDisableChild(def value) {
+        child.setEnabled(value ? true : false)
     }
 }
